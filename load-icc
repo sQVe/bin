@@ -1,0 +1,8 @@
+#!/bin/bash
+
+pkill redshift
+while [ ! $(pidof redshift | wc -w) = 0 ]
+do
+  sleep 1
+done
+dispwin -I /home/sqve/.local/share/DisplayCAL/storage/RXN49-LQ133Z1\ \#1\ 2017-02-13\ 21-46\ D6500\ 2.2\ F-S\ XYZLUT+MTX/RXN49-LQ133Z1\ \#1\ 2017-02-13\ 21-46\ D6500\ 2.2\ F-S\ XYZLUT+MTX.icc
