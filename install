@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-
-ln -s /home/sqve/.bin/i3exit /usr/local/bin/
-ln -s /home/sqve/.bin/load-icc /usr/local/bin/
-ln -s /home/sqve/.bin/lock /usr/local/bin/
-ln -s /home/sqve/.bin/postman /usr/local/bin/
-ln -s /home/sqve/.bin/spotify-start /usr/local/bin/
-
-ln -s /home/sqve/.bin/private/twitch/index.coffee /usr/local/bin/twitch

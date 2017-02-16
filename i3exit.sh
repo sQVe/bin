@@ -23,5 +23,4 @@ case "$1" in
         echo "Usage: $0 { exit | hibernate | lock | reboot | suspend | shutdown }"
         exit 2
 esac
-
 exit 0
