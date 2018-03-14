@@ -8,3 +8,4 @@ ln -s /home/sqve/.bin/phone.sh /usr/local/bin/phone
 ln -s /home/sqve/.bin/spotify-start.sh /usr/local/bin/spotify-start
 ln -s /home/sqve/.bin/start-qutebrowser.sh /usr/local/bin/start-qutebrowser
 ln -s /home/sqve/.bin/t.sh /usr/local/bin/t
+ln -s /home/sqve/.bin/sx.sh /usr/local/bin/sx
