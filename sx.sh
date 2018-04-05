@@ -1,13 +1,15 @@
 #!/usr/bin/env bash
 
 if [[ $1 =~ ^-?[0-9]+$ ]]; then
-  xresources=$HOME/.Xresources
-  default_dpi=$(ag --nonumbers Xft.dpi "$xresources" | awk '{print $2}')
+  xresources_path=$HOME/.Xresources
+  dpi=$(ag --nonumbers Xft.dpi "$xresources_path" | awk '{print $2}')
 
-  sed -i "/Xft.dpi/s/$default_dpi/$1/" "$xresources"
+  sed -i "/Xft.dpi/s/$dpi/$1/" "$xresources_path"
   echo "Starting the X server with DPI set to $1..."
+
+  # Revert back to the default DPI setting after a set time.
+  (sleep 2; sed -i "/Xft.dpi/s/$1/$dpi/" "$xresources_path") & disown
   startx
-  sed -i "/Xft.dpi/s/$1/$default_dpi/" "$xresources"
   exit 0
 fi
 
