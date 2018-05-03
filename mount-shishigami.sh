@@ -10,7 +10,6 @@ sudo mkdir -p /mnt/shishigami/misc
 sudo mkdir -p /mnt/shishigami/pictures
 sudo mkdir -p /mnt/shishigami/portable-hdd
 
-
 echo -e "${cyan}Mounting shishigami...${nc}"
 
 echo -n 'media: '

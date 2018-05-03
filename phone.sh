@@ -5,19 +5,16 @@ if [[ "$#" -eq 0 ]] ; then
   exit 1
 fi
 
-while [[ "$#" -gt 0 ]]; do
-  if [[ $1 =~ ^-h|--help|help$ ]]; then
-    kdeconnect-cli --help
-    exit 0
-  fi
-  shift
-done
+if [[ $1 =~ ^(-h|--help|help)$ ]]; then
+  command kdeconnect-cli --help
+  exit 0
+fi
 
 device="HUAWEI"
 
 id="$(
-  (kdeconnect-cli -a | ag "$device:" | awk '{print $3}') ||
-  (kdeconnect-cli -l | ag "$device:" | awk '{print $3}')
+  (command kdeconnect-cli -a | ag "$device:" | awk '{print $3}') ||
+  (command kdeconnect-cli -l | ag "$device:" | awk '{print $3}')
 )"
 
 if [[ -z "$id" ]]; then
@@ -25,4 +22,4 @@ if [[ -z "$id" ]]; then
   exit 1
 fi
 
-kdeconnect-cli -d "$id" "$@"
+command kdeconnect-cli -d "$id" "$@"
