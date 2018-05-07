@@ -14,13 +14,4 @@ if [[ ! -d "$OHOY_HOME" ]]; then
   curl -L "$LATEST_URL" | tar xz -C "$OHOY_HOME"
 fi
 
-sudo gpasswd -a "$USER" docker
-
-trap '
-  sudo gpasswd -d "$USER" docker;
-  exit 1;
-  ' INT
-
 $OHOY_SCRIPT "$@"
-
-sudo gpasswd -d "$USER" docker
