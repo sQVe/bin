@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+#  ┏━┓╻ ╻┏━┓╻ ╻
+#  ┃ ┃┣━┫┃ ┃┗┳┛
+#  ┗━┛╹ ╹┗━┛ ╹
+
 OHOY_HOME="$HOME/.ohoy"
 OHOY_SCRIPT="$OHOY_HOME/scripts/run.sh"
 OS=$(uname | awk '{print tolower($0)}')

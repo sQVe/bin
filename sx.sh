@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+#  ┏━┓╻ ╻
+#  ┗━┓┏╋┛
+#  ┗━┛╹ ╹
+
 if [[ $1 =~ ^-?[0-9]+$ ]]; then
   xresources_path=$HOME/.Xresources
   dpi=$(ag --nonumbers Xft.dpi "$xresources_path" | awk '{print $2}')
