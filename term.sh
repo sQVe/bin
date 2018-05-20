@@ -4,12 +4,12 @@
 #   ┃ ┣╸ ┣┳┛┃┃┃
 #   ╹ ┗━╸╹┗╸╹ ╹
 
-title="urxvt"
+instance="urxvt"
 
 while [[ "$1" =~ ^- && ! "$1" == "--" ]]; do case $1 in
-  -t | --title )
+  -n | --name )
     shift;
-    title="$1"
+    instance="$1"
     ;;
 esac; shift; done
 if [[ "$1" == '--' ]]; then shift; fi
@@ -27,5 +27,5 @@ if [[ -n "$path" ]]; then
   command urxvt -cd "$path" & disown
 else
   # Execute command in new terminal.
-  command urxvt -title "$title" -e zsh -ic "$*;zsh" & disown
+  command urxvt -name "$instance" -e zsh -ic "$*;zsh" & disown
 fi
