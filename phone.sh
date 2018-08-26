@@ -14,7 +14,7 @@ if [[ $1 =~ ^(-h|--help|help)$ ]]; then
   exit 0
 fi
 
-device="HUAWEI"
+device="OnePlus"
 
 id="$(
   (command kdeconnect-cli -a | ag "$device:" | awk '{print $3}') ||
