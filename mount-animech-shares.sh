@@ -13,6 +13,7 @@ sudo mkdir -p /mnt/animech/administration
 sudo mkdir -p /mnt/animech/development
 sudo mkdir -p /mnt/animech/misc
 sudo mkdir -p /mnt/animech/projects
+sudo mkdir -p /mnt/animech/support
 
 
 echo -n 'AD Password: '
@@ -34,4 +35,8 @@ echo -e "${green}OK${nc}"
 
 echo -n 'projects: '
 sudo mount -t cifs //animech-shares/Projects /mnt/animech/projects -o username=OsGr,password="$password",workgroup=AnimechDomain.local,iocharset=utf8
+echo -e "${green}OK${nc}"
+
+echo -n 'support: '
+sudo mount -t cifs //animech-shares/Support /mnt/animech/support -o username=OsGr,password="$password",workgroup=AnimechDomain.local,iocharset=utf8
 echo -e "${green}OK${nc}"
