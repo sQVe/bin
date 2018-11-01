@@ -5,5 +5,5 @@
 #  ┗━┓┃  ┣━┫┃  ┣╸  ┃┃   ┗━┓┣━┛┃ ┃ ┃ ┃┣╸ ┗┳┛
 #  ┗━┛┗━╸╹ ╹┗━╸┗━╸╺┻┛   ┗━┛╹  ┗━┛ ╹ ╹╹   ╹
 
-i3-msg workspace "5 "
+i3-msg workspace "4 "
 spotify --force-device-scale-factor=1.92 %U
