@@ -9,6 +9,7 @@ ln -s /home/sqve/.bin/github-clone.sh /usr/local/bin/github-clone
 ln -s /home/sqve/.bin/laptop-keyboard-toggle.sh /usr/local/bin/laptop-keyboard-toggle
 ln -s /home/sqve/.bin/lock.sh /usr/local/bin/lock
 ln -s /home/sqve/.bin/lookup-git-alias.sh /usr/local/bin/lookup-git-alias
+ln -s /home/sqve/.bin/mount-animech-shares.sh /usr/local/bin/mount-animech-shares
 ln -s /home/sqve/.bin/mount-shishigami.sh /usr/local/bin/mount-shishigami
 ln -s /home/sqve/.bin/note.sh /usr/local/bin/note
 ln -s /home/sqve/.bin/nvim-dir.sh /usr/local/bin/nvim-dir
