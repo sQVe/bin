@@ -7,6 +7,7 @@
 ln -s /home/sqve/.bin/lock.sh /usr/local/bin/lock
 ln -s /home/sqve/.bin/mount-shishigami.sh /usr/local/bin/mount-shishigami
 ln -s /home/sqve/.bin/note.sh /usr/local/bin/note
+ln -s /home/sqve/.bin/nvim-cd.sh /usr/local/bin/nvim-cd
 ln -s /home/sqve/.bin/phone.sh /usr/local/bin/phone
 ln -s /home/sqve/.bin/random-wallpaper.sh /usr/local/bin/random-wallpaper
 ln -s /home/sqve/.bin/repos-behind.sh /usr/local/bin/repos-behind
