@@ -21,7 +21,7 @@ for repo in $repositories; do
 done
 dirtyRepositoriesList=$(printf '  %s\n' "${dirtyRepositories[@]}")
 
-if [[ -z "$dirtyRepositoriesList" ]]; then
+if [[ -z  ${dirtyRepositories[*]} ]]; then
   echo "No dirty repositories found."
 else
   echo "Found $(echo "$dirtyRepositoriesList" | wc -l) dirty repositories:"
