@@ -10,7 +10,7 @@ if [[ -z "$1" ]]; then
 fi
 
 notes="$(command fd --extension md . "$HOME/notes" | sed -r -e 's/\.md//' -e 's/^.+notes\///')"
-choice="$(echo "$notes" | ag "$1" | head -n 1)"
+choice="$(echo "$notes" | ag "$(sed -r 's/\.md$//' <<< "$1")" | head -n 1)"
 
 if [[ -z "$choice" ]]; then
   echo "No note found matching \"$1\". Exiting."
