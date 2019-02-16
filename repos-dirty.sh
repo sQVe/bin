@@ -13,17 +13,17 @@ else
   echo "Found $(echo "$repositories" | wc -l) repositories. Checking status..."
 fi
 
-dirtyRepositories=()
+dirty_repositories=()
 for repo in $repositories; do
   if [[ -n "$(git -C "$repo" status --short)" ]]; then
-    dirtyRepositories+=("$repo")
+    dirty_repositories+=("$repo")
   fi
 done
-dirtyRepositoriesList=$(printf '  %s\n' "${dirtyRepositories[@]}")
+dirty_repositories_list=$(printf '  %s\n' "${dirty_repositories[@]}")
 
-if [[ -z  ${dirtyRepositories[*]} ]]; then
+if [[ -z  ${dirty_repositories[*]} ]]; then
   echo "No dirty repositories found."
 else
-  echo "Found $(echo "$dirtyRepositoriesList" | wc -l) dirty repositories:"
-  echo "$dirtyRepositoriesList"
+  echo "Found $(echo "$dirty_repositories_list" | wc -l) dirty repositories:"
+  echo "$dirty_repositories_list"
 fi
