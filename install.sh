@@ -4,6 +4,7 @@
 #  ┃┃┗┫┗━┓ ┃ ┣━┫┃  ┃
 #  ╹╹ ╹┗━┛ ╹ ╹ ╹┗━╸┗━╸
 
+ln -s /home/sqve/.bin/fnr.sh /usr/local/bin/fnr
 ln -s /home/sqve/.bin/lock.sh /usr/local/bin/lock
 ln -s /home/sqve/.bin/mount-shishigami.sh /usr/local/bin/mount-shishigami
 ln -s /home/sqve/.bin/note.sh /usr/local/bin/note
