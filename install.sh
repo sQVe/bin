@@ -18,6 +18,7 @@ ln -s /home/sqve/.bin/repos-behind.sh /usr/local/bin/repos-behind
 ln -s /home/sqve/.bin/repos-dirty.sh /usr/local/bin/repos-dirty
 ln -s /home/sqve/.bin/scaled-qutebrowser.sh /usr/local/bin/scaled-qutebrowser
 ln -s /home/sqve/.bin/scaled-spotify.sh /usr/local/bin/scaled-spotify
+ln -s /home/sqve/.bin/mons-work.sh /usr/local/bin/mons-work
 ln -s /home/sqve/.bin/sx.sh /usr/local/bin/sx
 ln -s /home/sqve/.bin/term.sh /usr/local/bin/term
 ln -s /home/sqve/.bin/uberfm.sh /usr/local/bin/uberfm
