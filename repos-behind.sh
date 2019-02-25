@@ -10,13 +10,15 @@ if [[ -z "$repositories" ]]; then
   echo "No repositories found. Exiting."
   exit
 else
-  echo "Found $(echo "$repositories" | wc -l) repositories. Checking status..."
+  echo "Found $(echo "$repositories" | wc -l) repositories. Checking status:"
 fi
 
 repositories_behind=()
 repositories_able_to_fastforward=()
 for repo in $repositories; do
-  status="$(git -C "$repo" fetch && git -C "$repo" status)"
+  echo "  ✔  $repo"
+
+  status="$(git -C "$repo" fetch &> /dev/null && git -C "$repo" status)"
 
   if [[ -n "$(echo "$status" | ag 'branch is behind')" ]]; then
     repositories_behind+=("$repo")

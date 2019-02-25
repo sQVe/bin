@@ -10,11 +10,13 @@ if [[ -z "$repositories" ]]; then
   echo "No repositories found. Exiting."
   exit
 else
-  echo "Found $(echo "$repositories" | wc -l) repositories. Checking status..."
+  echo "Found $(echo "$repositories" | wc -l) repositories. Checking status:"
 fi
 
 dirty_repositories=()
 for repo in $repositories; do
+  echo "  ✔  $repo"
+
   if [[ -n "$(git -C "$repo" status --short)" ]]; then
     dirty_repositories+=("$repo")
   fi
