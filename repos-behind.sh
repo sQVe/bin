@@ -35,7 +35,7 @@ for repo in $repositories; do
     echo "  ❌ $repo"
   fi
 done
-repositories_behind_list=$(printf '%s\n' "${repositories_behind[@]}")
+repositories_behind_list=$(printf '  %s\n' "${repositories_behind[@]}")
 repositories_able_to_fastforward_list=$(printf '  %s\n' "${repositories_able_to_fastforward[@]}")
 
 if [[ -z "${repositories_behind[*]}" ]]; then
