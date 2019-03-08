@@ -16,17 +16,23 @@ fi
 repositories_behind=()
 repositories_able_to_fastforward=()
 for repo in $repositories; do
-  echo "  ✔  $repo"
+  host=$(git -C "$repo" remote get-url origin | cut -d ':' -f 1 | cut -d '@' -f 2)
 
-  status="$(git -C "$repo" fetch &> /dev/null && git -C "$repo" status)"
+  if ping -c 1 -W 2 "$host" &> /dev/null; then
+    status="$(git -C "$repo" fetch &> /dev/null && git -C "$repo" status)"
 
-  if [[ -n "$(echo "$status" | ag 'branch is behind')" ]]; then
-    repositories_behind+=("$repo")
+    echo "  ✔  $repo"
 
-    if [[ -n "$(echo "$status" | ag 'can be fast-forwarded')" ]] &&
-       [[ -z "$(echo "$status" | ag -o 'Changes not staged')" ]]; then
-      repositories_able_to_fastforward+=("$repo")
+    if [[ -n "$(echo "$status" | ag 'branch is behind')" ]]; then
+      repositories_behind+=("$repo")
+
+      if [[ -n "$(echo "$status" | ag 'can be fast-forwarded')" ]] &&
+         [[ -z "$(echo "$status" | ag -o 'Changes not staged')" ]]; then
+        repositories_able_to_fastforward+=("$repo")
+      fi
     fi
+  else
+    echo "  ❌ $repo"
   fi
 done
 repositories_behind_list=$(printf '%s\n' "${repositories_behind[@]}")
