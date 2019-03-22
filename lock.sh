@@ -4,13 +4,18 @@
 #  ┃  ┃ ┃┃  ┣┻┓
 #  ┗━╸┗━┛┗━╸╹ ╹
 
-(sleep 30s && xset dpms force standby) &
+(sleep 1m && xset dpms force standby) &
 dpms_standby=$!
+
+(sleep 15m && pkill greenclip && greenclip clear && greenclip daemon) &
+clipboard_clear=$!
 
 (sleep 30m && gpg-connect-agent reloadagent /bye) &
 gpg_clear=$!
 
 playerctl pause
 i3lock -n -c 22093F
+
 kill $dpms_standby
+kill $clipboard_clear
 kill $gpg_clear
