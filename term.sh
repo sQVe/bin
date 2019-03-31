@@ -4,12 +4,17 @@
 #   ┃ ┣╸ ┣┳┛┃┃┃
 #   ╹ ┗━╸╹┗╸╹ ╹
 
-instance="urxvt"
+instance="Alacritty"
+title="Alacritty"
 
 while [[ "$1" =~ ^- && ! "$1" == "--" ]]; do case $1 in
-  -n | --name )
+  -i | --instance )
     shift;
     instance="$1"
+    ;;
+  -t | --title )
+    shift;
+    title="$1"
     ;;
 esac; shift; done
 if [[ "$1" == '--' ]]; then shift; fi
@@ -24,8 +29,8 @@ if [[ -n "$path" ]]; then
   fi
 
   # Open directory in new terminal.
-  urxvt -cd "$path" &> /dev/null & disown
+  alacritty --working-directory "$path" &> /dev/null & disown
 else
   # Execute command in new terminal.
-  urxvt -name "$instance" -e zsh -ic "$*;zsh" &> /dev/null & disown
+  alacritty --class "$instance" --title "$title" -e zsh -ic "$*;zsh" &> /dev/null & disown
 fi
