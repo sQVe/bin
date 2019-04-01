@@ -4,17 +4,14 @@
 #   ┃ ┣╸ ┣┳┛┃┃┃
 #   ╹ ┗━╸╹┗╸╹ ╹
 
-instance="Alacritty"
-title="Alacritty"
-
 while [[ "$1" =~ ^- && ! "$1" == "--" ]]; do case $1 in
   -i | --instance )
     shift;
-    instance="$1"
+    instance=(--class "$1")
     ;;
   -t | --title )
     shift;
-    title="$1"
+    title=(--title "$1")
     ;;
 esac; shift; done
 if [[ "$1" == '--' ]]; then shift; fi
@@ -32,5 +29,5 @@ if [[ -n "$path" ]]; then
   alacritty --working-directory "$path" &> /dev/null & disown
 else
   # Execute command in new terminal.
-  alacritty --class "$instance" --title "$title" -e zsh -ic "$*;zsh" &> /dev/null & disown
+  alacritty "${instance[@]}" "${title[@]}" -e zsh -ic "$*;zsh" &> /dev/null & disown
 fi
