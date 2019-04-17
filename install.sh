@@ -4,7 +4,7 @@
 #  ┃┃┗┫┗━┓ ┃ ┣━┫┃  ┃
 #  ╹╹ ╹┗━┛ ╹ ╹ ╹┗━╸┗━╸
 
-ln -s /home/sqve/.bin/fnr.sh /usr/local/bin/fnr
+ln -s /home/sqve/.bin/far.sh /usr/local/bin/far
 ln -s /home/sqve/.bin/github-clone.sh /usr/local/bin/github-clone
 ln -s /home/sqve/.bin/lock.sh /usr/local/bin/lock
 ln -s /home/sqve/.bin/lookup-git-alias.sh /usr/local/bin/lookup-git-alias
