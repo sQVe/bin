@@ -17,8 +17,8 @@ fi
 device="OnePlus"
 
 id="$(
-  (kdeconnect-cli -a | ag "$device:" | awk '{print $3}') ||
-  (kdeconnect-cli -l | ag "$device:" | awk '{print $3}')
+  (kdeconnect-cli -a | rg "$device:" | awk '{print $3}') ||
+  (kdeconnect-cli -l | rg "$device:" | awk '{print $3}')
 )"
 
 if [[ -z "$id" ]]; then

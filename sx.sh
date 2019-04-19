@@ -6,7 +6,7 @@
 
 if [[ $1 =~ ^-?[0-9]+$ ]]; then
   xresources_path=$HOME/.Xresources
-  dpi=$(ag --nonumbers Xft.dpi "$xresources_path" | awk '{print $2}')
+  dpi=$(rg --no-line-number Xft.dpi "$xresources_path" | awk '{print $2}')
 
   sed -i "/Xft.dpi/s/$dpi/$1/" "$xresources_path"
   echo "Starting the X server with DPI set to $1..."

@@ -23,11 +23,11 @@ for repo in $repositories; do
 
     echo "  ✔  $repo"
 
-    if [[ -n "$(echo "$status" | ag 'branch is behind')" ]]; then
+    if [[ -n "$(echo "$status" | rg 'branch is behind')" ]]; then
       repositories_behind+=("$repo")
 
-      if [[ -n "$(echo "$status" | ag 'can be fast-forwarded')" ]] &&
-         [[ -z "$(echo "$status" | ag -o 'Changes not staged')" ]]; then
+      if [[ -n "$(echo "$status" | rg 'can be fast-forwarded')" ]] &&
+         [[ -z "$(echo "$status" | rg -o 'Changes not staged')" ]]; then
         repositories_able_to_fastforward+=("$repo")
       fi
     fi
