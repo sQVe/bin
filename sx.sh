@@ -4,6 +4,9 @@
 #  ┗━┓┏╋┛
 #  ┗━┛╹ ╹
 
+# Ensure Xorg starts in home directory.
+cd "$HOME" || exit
+
 if [[ $1 =~ ^-?[0-9]+$ ]]; then
   xresources_path=$HOME/.Xresources
   dpi=$(rg --no-line-number Xft.dpi "$xresources_path" | awk '{print $2}')
