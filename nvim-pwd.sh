@@ -5,7 +5,7 @@
 #  ╹ ╹┗┛ ╹╹ ╹   ╹  ┗┻┛╺┻┛
 
 if [[ -d "$1" ]]; then
-  (cd "$1" && nvim +Ranger)
+  (cd "$1" && nvim)
 elif [[ -f "$1" ]]; then
   dirname="$(dirname "$1")/"
   (cd "$dirname" && nvim "${1/$dirname/}")
