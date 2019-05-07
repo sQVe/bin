@@ -4,15 +4,15 @@
 #  ┃╺┓┃ ┃ ┣━┫┃ ┃┣┻┓   ┃  ┃  ┃ ┃┃┗┫┣╸
 #  ┗━┛╹ ╹ ╹ ╹┗━┛┗━┛   ┗━╸┗━╸┗━┛╹ ╹┗━╸
 
-cut() {
-  command cut -d '/' -f "$1" <<< "$2"
+function cut() {
+  cut -d '/' -f "$1" <<< "$2"
 }
 
-is_url() {
+function is_url() {
   rg '^http' <<< "$1"
 }
 
-is_identifier() {
+function is_identifier() {
   rg '/' <<< "$1"
 }
 

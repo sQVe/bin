@@ -6,7 +6,7 @@
 
 export FIFO_UEBERZUG="/tmp/vifm-ueberzug-${PPID}"
 
-cleanup() {
+function cleanup() {
   rm "$FIFO_UEBERZUG" 2>/dev/null
   pkill -P $$ 2>/dev/null
 }
