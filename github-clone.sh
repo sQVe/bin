@@ -5,7 +5,7 @@
 #  ┗━┛╹ ╹ ╹ ╹┗━┛┗━┛   ┗━╸┗━╸┗━┛╹ ╹┗━╸
 
 function cut() {
-  cut -d '/' -f "$1" <<< "$2"
+  command cut -d '/' -f "$1" <<< "$2"
 }
 
 function is_url() {
