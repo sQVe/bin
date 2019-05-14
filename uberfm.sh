@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-#  ┏━╸┏┳┓
-#  ┣╸ ┃┃┃
-#  ╹  ╹ ╹
+# ╻ ╻┏┓ ┏━╸┏━┓┏━╸┏┳┓
+# ┃ ┃┣┻┓┣╸ ┣┳┛┣╸ ┃┃┃
+# ┗━┛┗━┛┗━╸╹┗╸╹  ╹ ╹
 
 export FIFO_UEBERZUG="/tmp/vifm-ueberzug-${PPID}"
 
@@ -16,7 +16,7 @@ rm "$FIFO_UEBERZUG" 2>/dev/null
 mkfifo "$FIFO_UEBERZUG" >/dev/null
 
 trap cleanup EXIT 2>/dev/null
-tail --follow "$FIFO_UEBERZUG" | ueberzug layer --silent --parser bash 2>&1 >/dev/null &
+tail --follow "$FIFO_UEBERZUG" | ueberzug layer --silent --parser bash > /dev/null 2>&1 &
 
-vifm
+command vifm --choose-dir - "$@"
 cleanup

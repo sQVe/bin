@@ -5,7 +5,6 @@
 #  ╹╹ ╹┗━┛ ╹ ╹ ╹┗━╸┗━╸
 
 ln -s /home/sqve/.bin/far.sh /usr/local/bin/far
-ln -s /home/sqve/.bin/fm.sh /usr/local/bin/fm
 ln -s /home/sqve/.bin/github-clone.sh /usr/local/bin/github-clone
 ln -s /home/sqve/.bin/lock.sh /usr/local/bin/lock
 ln -s /home/sqve/.bin/lookup-git-alias.sh /usr/local/bin/lookup-git-alias
@@ -20,3 +19,4 @@ ln -s /home/sqve/.bin/scaled-qutebrowser.sh /usr/local/bin/scaled-qutebrowser
 ln -s /home/sqve/.bin/scaled-spotify.sh /usr/local/bin/scaled-spotify
 ln -s /home/sqve/.bin/sx.sh /usr/local/bin/sx
 ln -s /home/sqve/.bin/term.sh /usr/local/bin/term
+ln -s /home/sqve/.bin/uberfm.sh /usr/local/bin/uberfm
