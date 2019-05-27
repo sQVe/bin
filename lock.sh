@@ -13,7 +13,7 @@ clipboard_clear=$!
 (sleep 30m && gpg-connect-agent reloadagent /bye) &
 gpg_clear=$!
 
-playerctl pause
+playerctl pause &
 i3lock -n -c 22093F
 
 kill $dpms_standby
