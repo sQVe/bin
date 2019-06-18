@@ -4,4 +4,4 @@
 #  ┗━┓┃  ┣━┫┃  ┣╸  ┃┃   ┃┓┃┃ ┃ ┃ ┣╸ ┣┻┓┣┳┛┃ ┃┃╻┃┗━┓┣╸ ┣┳┛
 #  ┗━┛┗━╸╹ ╹┗━╸┗━╸╺┻┛   ┗┻┛┗━┛ ╹ ┗━╸┗━┛╹┗╸┗━┛┗┻┛┗━┛┗━╸╹┗╸
 
-QT_SCALE_FACTOR=2 optirun --bridge auto qutebrowser "$@"
+QT_SCALE_FACTOR=2 optirun qutebrowser "$@"
