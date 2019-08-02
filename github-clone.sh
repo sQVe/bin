@@ -5,15 +5,15 @@
 #  ┗━┛╹ ╹ ╹ ╹┗━┛┗━┛   ┗━╸┗━╸┗━┛╹ ╹┗━╸
 
 function cut() {
-  command cut -d '/' -f "$1" <<< "$2"
+  command cut -d '/' -f "$1" <<<"$2"
 }
 
 function is_url() {
-  rg '^http' <<< "$1"
+  rg '^http' <<<"$1"
 }
 
 function is_identifier() {
-  rg '/' <<< "$1"
+  rg '/' <<<"$1"
 }
 
 if [[ $# -eq 1 ]]; then

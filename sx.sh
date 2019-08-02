@@ -15,7 +15,11 @@ if [[ $1 =~ ^-?[0-9]+$ ]]; then
   echo "Starting the X server with DPI set to $1..."
 
   # Revert back to the default DPI setting after a set time.
-  (sleep 2; sed -i "/Xft.dpi/s/$1/$dpi/" "$xresources_path") & disown
+  (
+    sleep 2
+    sed -i "/Xft.dpi/s/$1/$dpi/" "$xresources_path"
+  ) &
+  disown
   startx
   exit 0
 fi

@@ -4,7 +4,7 @@
 #  ┣━┛┣━┫┃ ┃┃┗┫┣╸
 #  ╹  ╹ ╹┗━┛╹ ╹┗━╸
 
-if [[ "$#" -eq 0 ]] ; then
+if [[ "$#" -eq 0 ]]; then
   echo "No arguments supplied!"
   exit 1
 fi
@@ -18,7 +18,7 @@ device="OnePlus"
 
 id="$(
   (kdeconnect-cli -a | rg "$device:" | awk '{print $3}') ||
-  (kdeconnect-cli -l | rg "$device:" | awk '{print $3}')
+    (kdeconnect-cli -l | rg "$device:" | awk '{print $3}')
 )"
 
 if [[ -z "$id" ]]; then

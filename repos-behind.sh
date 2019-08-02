@@ -18,8 +18,8 @@ repositories_able_to_fastforward=()
 for repo in $repositories; do
   host=$(git -C "$repo" remote get-url origin | cut -d ':' -f 1 | cut -d '@' -f 2)
 
-  if ping -c 1 -W 2 "$host" &> /dev/null; then
-    status="$(git -C "$repo" fetch &> /dev/null && git -C "$repo" status)"
+  if ping -c 1 -W 2 "$host" &>/dev/null; then
+    status="$(git -C "$repo" fetch &>/dev/null && git -C "$repo" status)"
 
     echo "  ✔  $repo"
 
@@ -27,7 +27,7 @@ for repo in $repositories; do
       repositories_behind+=("$repo")
 
       if [[ -n "$(echo "$status" | rg 'can be fast-forwarded')" ]] &&
-         [[ -z "$(echo "$status" | rg -o 'Changes not staged')" ]]; then
+        [[ -z "$(echo "$status" | rg -o 'Changes not staged')" ]]; then
         repositories_able_to_fastforward+=("$repo")
       fi
     fi
@@ -44,7 +44,7 @@ else
   echo "Found $(echo "$repositories_behind_list" | wc -l) repositories behind:"
   echo "$repositories_behind_list"
 
-  if [[ -z  ${repositories_able_to_fastforward[*]} ]]; then
+  if [[ -z ${repositories_able_to_fastforward[*]} ]]; then
     echo "No repositories able to fast-forward."
   else
     echo "Found $(echo "$repositories_able_to_fastforward_list" | wc -l) repositories to fast-forward:"

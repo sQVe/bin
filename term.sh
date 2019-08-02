@@ -4,16 +4,19 @@
 #   ┃ ┣╸ ┣┳┛┃┃┃
 #   ╹ ┗━╸╹┗╸╹ ╹
 
-while [[ "$1" =~ ^- && ! "$1" == "--" ]]; do case $1 in
-  -i | --instance )
-    shift;
+while [[ "$1" =~ ^- && ! "$1" == "--" ]]; do
+  case $1 in
+  -i | --instance)
+    shift
     instance=(--class "$1")
     ;;
-  -t | --title )
-    shift;
+  -t | --title)
+    shift
     title=(--title "$1")
     ;;
-esac; shift; done
+  esac
+  shift
+done
 if [[ "$1" == '--' ]]; then shift; fi
 
 # Ensure absolute path if given path.
@@ -26,8 +29,10 @@ if [[ -n "$path" ]]; then
   fi
 
   # Open directory in new terminal.
-  alacritty --working-directory "$path" &> /dev/null & disown
+  alacritty --working-directory "$path" &>/dev/null &
+  disown
 else
   # Execute command in new terminal.
-  alacritty "${instance[@]}" "${title[@]}" -e zsh -ic "$*;zsh" &> /dev/null & disown
+  alacritty "${instance[@]}" "${title[@]}" -e zsh -ic "$*;zsh" &>/dev/null &
+  disown
 fi
