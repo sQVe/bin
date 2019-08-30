@@ -9,7 +9,7 @@ if [[ $# -eq 0 ]]; then
   exit 0
 fi
 
-matches=$(rg '^alias' <"$ZIM_HOME"/modules/git/init.zsh | rg --case-sensitive "$1")
+matches=$(rg '^\s+alias' <"$ZIM_HOME"/modules/git/init.zsh | rg --case-sensitive "$1")
 result=""
 
 while read -r line; do
