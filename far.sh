@@ -11,8 +11,14 @@ fi
 
 match="${1:-.}"
 path="${2:-.}"
+stats=$(rg --stats "$match" "$path" | tail -n 8)
+matches=$(echo "$stats" | head -n 1 | rg -o '\d+')
 
-rg --stats "$match" "$path" | tail -n 8
+echo "$stats"
+
+if [[ $matches == 0 ]]; then
+  exit
+fi
 
 echo && echo -n "Would you like to review the matches? [Y/n] "
 read -r answer
