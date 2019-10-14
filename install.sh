@@ -20,3 +20,4 @@ ln -s /home/sqve/.bin/scaled-spotify.sh /usr/local/bin/scaled-spotify
 ln -s /home/sqve/.bin/sx.sh /usr/local/bin/sx
 ln -s /home/sqve/.bin/term.sh /usr/local/bin/term
 ln -s /home/sqve/.bin/uberfm.sh /usr/local/bin/uberfm
+ln -s /home/sqve/.bin/toggle-laptop-keyboard.sh /usr/local/bin/toggle-laptop-keyboard
