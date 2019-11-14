@@ -14,7 +14,7 @@ clipboard_clear=$!
 gpg_clear=$!
 
 playerctl pause &
-i3lock -n -c 22093F
+i3lock -n -c 3c3836
 
 kill $dpms_standby
 kill $clipboard_clear
