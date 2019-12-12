@@ -10,7 +10,7 @@ ln -s /home/sqve/.bin/lock.sh /usr/local/bin/lock
 ln -s /home/sqve/.bin/lookup-git-alias.sh /usr/local/bin/lookup-git-alias
 ln -s /home/sqve/.bin/mount-shishigami.sh /usr/local/bin/mount-shishigami
 ln -s /home/sqve/.bin/note.sh /usr/local/bin/note
-ln -s /home/sqve/.bin/nvim-pwd.sh /usr/local/bin/nvim-pwd
+ln -s /home/sqve/.bin/nvim-dir.sh /usr/local/bin/nvim-dir
 ln -s /home/sqve/.bin/phone.sh /usr/local/bin/phone
 ln -s /home/sqve/.bin/random-wallpaper.sh /usr/local/bin/random-wallpaper
 ln -s /home/sqve/.bin/repos-behind.sh /usr/local/bin/repos-behind

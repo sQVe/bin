@@ -17,4 +17,4 @@ if [[ -z "$choice" ]]; then
   exit
 fi
 
-nvim-pwd "$HOME/notes/$choice.md"
+nvim "$HOME/notes/$choice.md"
