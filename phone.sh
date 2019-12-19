@@ -16,10 +16,10 @@ fi
 
 device="OnePlus"
 
-id="$(
+id=$(
   (kdeconnect-cli -a | rg "$device:" | awk '{print $3}') ||
     (kdeconnect-cli -l | rg "$device:" | awk '{print $3}')
-)"
+)
 
 if [[ -z "$id" ]]; then
   echo "Phone was not found!"

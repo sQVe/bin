@@ -9,8 +9,8 @@ if [[ -z "$1" ]]; then
   exit
 fi
 
-notes="$(command fd --extension md . "$HOME/notes" | sed -r -e 's/\.md//' -e 's/^.+notes\///')"
-choice="$(echo "$notes" | rg "$(sed -r 's/\.md$//' <<<"$1")" | head -n 1)"
+notes=$(command fd --extension md . "$HOME/notes" | sed -r -e 's/\.md//' -e 's/^.+notes\///')
+choice=$(echo "$notes" | rg "$(sed -r 's/\.md$//' <<<"$1")" | head -n 1)
 
 if [[ -z "$choice" ]]; then
   echo "No note found matching \"$1\". Exiting."

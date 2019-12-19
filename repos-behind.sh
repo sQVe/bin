@@ -4,7 +4,7 @@
 #  ┣┳┛┣╸ ┣━┛┃ ┃┗━┓   ┣┻┓┣╸ ┣━┫┃┃┗┫ ┃┃
 #  ╹┗╸┗━╸╹  ┗━┛┗━┛   ┗━┛┗━╸╹ ╹╹╹ ╹╺┻┛
 
-repositories="$(fd --hidden --exclude ".{builds,local}" --type directory '^.git$' . | sed -r 's/\/.git$//')"
+repositories=$(fd --hidden --exclude ".{builds,local}" --type directory '^.git$' . | sed -r 's/\/.git$//')
 
 if [[ -z "$repositories" ]]; then
   echo "No repositories found. Exiting."
@@ -19,7 +19,7 @@ for repo in $repositories; do
   host=$(git -C "$repo" remote get-url origin | cut -d ':' -f 1 | cut -d '@' -f 2)
 
   if ping -c 1 -W 2 "$host" &>/dev/null; then
-    status="$(git -C "$repo" fetch &>/dev/null && git -C "$repo" status)"
+    status=$(git -C "$repo" fetch &>/dev/null && git -C "$repo" status)
 
     echo "  ✔  $repo"
 

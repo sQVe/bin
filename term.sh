@@ -20,12 +20,12 @@ done
 if [[ "$1" == '--' ]]; then shift; fi
 
 # Ensure absolute path if given path.
-path="$(readlink -e "$1")"
+path=$(readlink -e "$1")
 
 if [[ -n "$path" ]]; then
   # Get directory name if given file path.
   if [[ -f $path ]]; then
-    path="$(dirname "$path")"
+    path=$(dirname "$path")
   fi
 
   # Open directory in new terminal.
