@@ -4,4 +4,4 @@
 #  ┣┳┛┣━┫┃┗┫ ┃┃┃ ┃┃┃┃   ┃╻┃┣━┫┃  ┃  ┣━┛┣━┫┣━┛┣╸ ┣┳┛
 #  ╹┗╸╹ ╹╹ ╹╺┻┛┗━┛╹ ╹   ┗┻┛╹ ╹┗━╸┗━╸╹  ╹ ╹╹  ┗━╸╹┗╸
 
-feh --randomize --bg-fill --no-fehbg ~sqve/pictures/wallpapers/*
+feh --randomize --bg-fill --no-fehbg "$PICTURES"/wallpapers/*

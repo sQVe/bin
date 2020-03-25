@@ -4,7 +4,7 @@
 #  ┣┳┛┣╸ ┣━┛┃ ┃┗━┓   ┣┻┓┣╸ ┣━┫┃┃┗┫ ┃┃
 #  ╹┗╸┗━╸╹  ┗━┛┗━┛   ┗━┛┗━╸╹ ╹╹╹ ╹╺┻┛
 
-repositories=$(fd --hidden --exclude ".{builds,local,zim}" --type directory '^.git$' . | sed -r 's/\/.git$//')
+repositories=$(fd --hidden --exclude ".{local}" --type directory '^.git$' . | sed -r 's/\/.git$//')
 
 if [[ -z "$repositories" ]]; then
   echo "No repositories found. Exiting."

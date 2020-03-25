@@ -4,22 +4,24 @@
 #  ┃┃┗┫┗━┓ ┃ ┣━┫┃  ┃
 #  ╹╹ ╹┗━┛ ╹ ╹ ╹┗━╸┗━╸
 
-ln -s /home/sqve/.bin/far.sh /usr/local/bin/far
-ln -s /home/sqve/.bin/github-clone.sh /usr/local/bin/github-clone
-ln -s /home/sqve/.bin/laptop-keyboard-toggle.sh /usr/local/bin/laptop-keyboard-toggle
-ln -s /home/sqve/.bin/lock.sh /usr/local/bin/lock
-ln -s /home/sqve/.bin/lookup-git-alias.sh /usr/local/bin/lookup-git-alias
-ln -s /home/sqve/.bin/mons-work.sh /usr/local/bin/mons-work
-ln -s /home/sqve/.bin/mount-shishigami.sh /usr/local/bin/mount-shishigami
-ln -s /home/sqve/.bin/nmgui.sh /usr/local/bin/nmgui
-ln -s /home/sqve/.bin/note.sh /usr/local/bin/note
-ln -s /home/sqve/.bin/nvim-dir.sh /usr/local/bin/nvim-dir
-ln -s /home/sqve/.bin/phone.sh /usr/local/bin/phone
-ln -s /home/sqve/.bin/random-wallpaper.sh /usr/local/bin/random-wallpaper
-ln -s /home/sqve/.bin/repos-behind.sh /usr/local/bin/repos-behind
-ln -s /home/sqve/.bin/repos-dirty.sh /usr/local/bin/repos-dirty
-ln -s /home/sqve/.bin/scaled-qutebrowser.sh /usr/local/bin/scaled-qutebrowser
-ln -s /home/sqve/.bin/scaled-spotify.sh /usr/local/bin/scaled-spotify
-ln -s /home/sqve/.bin/sx.sh /usr/local/bin/sx
-ln -s /home/sqve/.bin/term.sh /usr/local/bin/term
-ln -s /home/sqve/.bin/uberfm.sh /usr/local/bin/uberfm
+target=/usr/local/bin
+
+ln -s "$BIN/far.sh" "$target/far"
+ln -s "$BIN/github-clone.sh" "$target/github-clone"
+ln -s "$BIN/laptop-keyboard-toggle.sh" "$target/laptop-keyboard-toggle"
+ln -s "$BIN/lock.sh" "$target/lock"
+ln -s "$BIN/lookup-git-alias.sh" "$target/lookup-git-alias"
+ln -s "$BIN/mons-work.sh" "$target/mons-work"
+ln -s "$BIN/mount-shishigami.sh" "$target/mount-shishigami"
+ln -s "$BIN/nmgui.sh" "$target/nmgui"
+ln -s "$BIN/note.sh" "$target/note"
+ln -s "$BIN/nvim-dir.sh" "$target/nvim-dir"
+ln -s "$BIN/phone.sh" "$target/phone"
+ln -s "$BIN/random-wallpaper.sh" "$target/random-wallpaper"
+ln -s "$BIN/repos-behind.sh" "$target/repos-behind"
+ln -s "$BIN/repos-dirty.sh" "$target/repos-dirty"
+ln -s "$BIN/scaled-qutebrowser.sh" "$target/scaled-qutebrowser"
+ln -s "$BIN/scaled-spotify.sh" "$target/scaled-spotify"
+ln -s "$BIN/sx.sh" "$target/sx"
+ln -s "$BIN/term.sh" "$target/term"
+ln -s "$BIN/uberfm.sh" "$target/uberfm"
