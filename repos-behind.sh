@@ -6,6 +6,8 @@
 
 repositories=$(fd --hidden --exclude ".{local}" --type directory '^.git$' . | sed -r 's/\/.git$//')
 
+ping -c 1 -W 15 1.1.1.1 &>/dev/null || (echo "Unable to connect to internet. Exiting" && exit 1)
+
 if [[ -z "$repositories" ]]; then
   echo "No repositories found. Exiting."
   exit
@@ -13,47 +15,43 @@ else
   echo "Found $(echo "$repositories" | wc -l) repositories. Checking status:"
 fi
 
-repositories_behind=()
-repositories_able_to_fastforward=()
+behind_repos=()
+fastforwardable_repos=()
 for repo in $repositories; do
-  host=$(git -C "$repo" remote get-url origin | cut -d ':' -f 1 | cut -d '@' -f 2)
+  status=$(git -C "$repo" fetch &>/dev/null && git -C "$repo" status)
 
-  if ping -c 1 -W 2 "$host" &>/dev/null; then
-    status=$(git -C "$repo" fetch &>/dev/null && git -C "$repo" status)
-
-    echo "  ✔  $repo"
-
-    if [[ -n "$(echo "$status" | rg 'branch is behind')" ]]; then
-      repositories_behind+=("$repo")
-
-      if [[ -n "$(echo "$status" | rg 'can be fast-forwarded')" ]] &&
-        [[ -z "$(echo "$status" | rg -o 'Changes not staged')" ]]; then
-        repositories_able_to_fastforward+=("$repo")
-      fi
+  if [[ -n "$(echo "$status" | rg 'branch is behind')" ]]; then
+    if [[ -n "$(echo "$status" | rg 'can be fast-forwarded')" ]] &&
+      [[ -z "$(echo "$status" | rg -o 'Changes not staged')" ]]; then
+      fastforwardable_repos+=("$repo")
+      echo "  🔄  $repo"
+    else
+      behind_repos+=("$repo")
+      echo "  ❌ $repo"
     fi
   else
-    echo "  ❌ $repo"
+    echo "  ✔ $repo"
   fi
 done
-repositories_behind_list=$(printf '  %s\n' "${repositories_behind[@]}")
-repositories_able_to_fastforward_list=$(printf '  %s\n' "${repositories_able_to_fastforward[@]}")
+behind_repos_list=$(printf '  %s\n' "${behind_repos[@]}")
+fastforwardable_repos_list=$(printf '  %s\n' "${fastforwardable_repos[@]}")
 
-if [[ -z "${repositories_behind[*]}" ]]; then
+if [[ -z "${fastforwardable_repos[*]}" ]] && [[ -z "${behind_repos[*]}" ]]; then
   echo "No repositories behind found."
 else
-  echo "Found $(echo "$repositories_behind_list" | wc -l) repositories behind:"
-  echo "$repositories_behind_list"
+  echo "Found $(echo "$behind_repos_list" | wc -l) non fastforwardable repositories behind:"
+  echo "$behind_repos_list"
 
-  if [[ -z ${repositories_able_to_fastforward[*]} ]]; then
+  if [[ -z ${fastforwardable_repos[*]} ]]; then
     echo "No repositories able to fast-forward."
   else
-    echo "Found $(echo "$repositories_able_to_fastforward_list" | wc -l) repositories to fast-forward:"
-    echo "$repositories_able_to_fastforward_list"
+    echo "Found $(echo "$fastforwardable_repos_list" | wc -l) repositories to fast-forward:"
+    echo "$fastforwardable_repos_list"
     echo -n "Would you like to fast-forward? [Y/n] "
     read -r answer
 
     if [[ "$answer" != "N" && "$answer" != "n" ]]; then
-      for repo in $repositories_able_to_fastforward_list; do
+      for repo in $fastforwardable_repos_list; do
         git -C "$repo" pull
       done
     fi
