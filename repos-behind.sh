@@ -39,12 +39,12 @@ fastforwardable_repos_list=$(printf '  %s\n' "${fastforwardable_repos[@]}")
 if [[ -z "${fastforwardable_repos[*]}" ]] && [[ -z "${behind_repos[*]}" ]]; then
   echo "No repositories behind found."
 else
-  echo "Found $(echo "$behind_repos_list" | wc -l) non fastforwardable repositories behind:"
-  echo "$behind_repos_list"
+  if [[ -n ${behind_repos[*]} ]]; then
+    echo "Found $(echo "$behind_repos_list" | wc -l) non fastforwardable repositories behind:"
+    echo "$behind_repos_list"
+  fi
 
-  if [[ -z ${fastforwardable_repos[*]} ]]; then
-    echo "No repositories able to fast-forward."
-  else
+  if [[ -n ${fastforwardable_repos[*]} ]]; then
     echo "Found $(echo "$fastforwardable_repos_list" | wc -l) repositories to fast-forward:"
     echo "$fastforwardable_repos_list"
     echo -n "Would you like to fast-forward? [Y/n] "
