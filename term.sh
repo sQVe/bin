@@ -23,7 +23,7 @@ if [[ $# == "0" ]]; then
   alacritty "${instance[@]}" "${title[@]}" &>/dev/null &
 else
   # Ensure absolute path if given path.
-  path=$(readlink -e "$1")
+  path=$(readlink -e "$@")
 
   if [[ -n "$path" ]]; then
     # Get directory name if given file path.
