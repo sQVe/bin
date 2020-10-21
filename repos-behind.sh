@@ -53,6 +53,7 @@ else
     if [[ "$answer" != "N" && "$answer" != "n" ]]; then
       for repo in $fastforwardable_repos_list; do
         git -C "$repo" pull
+        git -C "$repo" submodule update --init --recursive
       done
     fi
   fi
