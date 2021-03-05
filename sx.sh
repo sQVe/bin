@@ -21,10 +21,8 @@ if [[ $1 =~ ^-?[0-9]+$ ]]; then
   (sleep 2 && sed -i "/Xft.dpi/s/$1/$dpi/" "$xresources") &
 
   startx
-  sudo prime-switch
   exit 0
 fi
 
 echo "Starting the X server with the default DPI setting..."
 startx
-sudo prime-switch
