@@ -12,12 +12,12 @@ gpg_clear=$!
 
 playerctl pause &
 
-notify-send "DUNST_COMMAND_PAUSE"
+dunstify "DUNST_COMMAND_PAUSE"
 pkill xcompmgr
 
 i3lock -n -c 3c3836
 
-notify-send "DUNST_COMMAND_RESUME"
+dunstify "DUNST_COMMAND_RESUME"
 xcompmgr -C &
 
 kill $dpms_standby
