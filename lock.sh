@@ -4,6 +4,9 @@
 #  ┃  ┃ ┃┃  ┣┻┓
 #  ┗━╸┗━┛┗━╸╹ ╹
 
+# Exit early when already locked.
+pgrep i3lock && exit
+
 (sleep 1m && xset dpms force standby) &
 dpms_standby=$!
 
