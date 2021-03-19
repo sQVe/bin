@@ -4,19 +4,19 @@
 # ┃ ┃┣┻┓┣╸ ┣┳┛┣╸ ┃┃┃
 # ┗━┛┗━┛┗━╸╹┗╸╹  ╹ ╹
 
-export FIFO_UEBERZUG="/tmp/vifm-ueberzug-${PPID}"
-
-function cleanup() {
-  rm "$FIFO_UEBERZUG" 2>/dev/null
-  pkill -P $$ 2>/dev/null
-}
-
-pkill -P $$ 2>/dev/null
-rm "$FIFO_UEBERZUG" 2>/dev/null
-mkfifo "$FIFO_UEBERZUG" >/dev/null
-
-trap cleanup EXIT 2>/dev/null
-tail --follow "$FIFO_UEBERZUG" | ueberzug layer --silent --parser bash >/dev/null 2>&1 &
-
-command vifm --choose-dir - "$@"
-cleanup
+if [ -z "$(whereis ueberzug | awk '{print $2}')" ]; then
+  exec vifm "$@" && exit
+elif [ -z "$DISPLAY" ]; then
+  exec vifm "$@" && exit
+else
+  cleanup() {
+    rm "$FIFO_UEBERZUG"
+    pkill -P $$ > /dev/null
+  }
+  [ ! -d "$HOME/.cache/vifm" ] && mkdir --parents "$HOME/.cache/vifm"
+  export FIFO_UEBERZUG="$HOME/.cache/vifm/ueberzug-${PPID}"
+  mkfifo "$FIFO_UEBERZUG"
+  tail --follow "$FIFO_UEBERZUG" | ueberzug layer --silent --parser bash 2>&1 > /dev/null &
+  trap cleanup EXIT
+  vifm "$@"
+fi
