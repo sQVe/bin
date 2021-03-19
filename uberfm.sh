@@ -5,9 +5,9 @@
 # ┗━┛┗━┛┗━╸╹┗╸╹  ╹ ╹
 
 if [ -z "$(whereis ueberzug | awk '{print $2}')" ]; then
-  exec vifm "$@" && exit
+  exec vifm --choose-dir - "$@" && exit
 elif [ -z "$DISPLAY" ]; then
-  exec vifm "$@" && exit
+  exec vifm --choose-dir - "$@" && exit
 else
   cleanup() {
     rm "$FIFO_UEBERZUG"
@@ -18,5 +18,5 @@ else
   mkfifo "$FIFO_UEBERZUG"
   tail --follow "$FIFO_UEBERZUG" | ueberzug layer --silent --parser bash 2>&1 > /dev/null &
   trap cleanup EXIT
-  vifm "$@"
+  vifm --choose-dir - "$@"
 fi
