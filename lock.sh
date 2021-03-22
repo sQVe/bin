@@ -23,7 +23,7 @@ i3lock -e -n -c 3c3836
 
 dunstify "DUNST_COMMAND_RESUME"
 xset dpms 240 240 240
-xcompmgr &
+xcompmgr -c -o 0 &
 
 kill $dpms_standby
 kill $gpg_clear
