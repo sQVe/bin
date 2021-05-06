@@ -15,13 +15,13 @@ gpg_clear=$!
 
 playerctl pause &
 
-dunstify "DUNST_COMMAND_PAUSE"
+dunstctl set-paused true
 xset dpms 30 30 30
 pkill xcompmgr
 
 i3lock -e -n -c 3c3836
 
-dunstify "DUNST_COMMAND_RESUME"
+dunstctl set-paused false
 xset dpms 240 240 240
 xcompmgr -c -l 0 -t 0 -r 0 -o 0 &
 
