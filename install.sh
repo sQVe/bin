@@ -6,6 +6,7 @@
 
 target=/usr/local/bin
 
+ln -s "/home/sqve/.bin/dots.sh" "$target/dots"
 ln -s "/home/sqve/.bin/far.sh" "$target/far"
 ln -s "/home/sqve/.bin/github-clone.sh" "$target/github-clone"
 ln -s "/home/sqve/.bin/laptop-keyboard-toggle.sh" "$target/laptop-keyboard-toggle"
