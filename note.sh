@@ -5,8 +5,8 @@
 #  ╹ ╹┗━┛ ╹ ┗━╸
 
 notes="$(fd --base-directory $NOTES --extension md --max-depth 1)"
-choice="$(fzf --query "$*" <<<"$notes" || exit)"
+choice="$(fzf --select-1 --query "$*" <<< "$notes" || exit)"
 
 [[ -z "$choice" ]] && exit 1
 
-nvim "$NOTES/$choice"
+nvim "$NOTES/$choice" +"Rooter"
