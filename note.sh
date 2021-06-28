@@ -9,4 +9,4 @@ choice="$(fzf --select-1 --query "$*" <<< "$files" || exit)"
 
 [[ -z "$choice" ]] && exit 1
 
-nvim "$NOTES/$choice" +"Rooter"
+nvim "$NOTES/$choice" +"cd $NOTES"
