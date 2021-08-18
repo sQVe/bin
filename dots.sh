@@ -4,7 +4,7 @@
 #   ┃┃┃ ┃ ┃ ┗━┓
 #  ╺┻┛┗━┛ ╹ ┗━┛
 
-files="$(fd --base-directory "$DOTFILES")"
+files="$(fd --base-directory "$DOTFILES" --type 'file')"
 choice="$(fzf --select-1 --query "$*" <<< "$files" || exit)"
 
 [[ -z "$choice" ]] && exit 1
