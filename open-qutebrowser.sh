@@ -7,7 +7,7 @@
 current_dpi=$(rg 'Xft.dpi' "$DOTFILES/config/Xresources" | rg -o '\d+')
 
 if ! pgrep qutebrowser; then
-  i3-msg workspace "2  "
+  i3-msg workspace "3  "
 fi
 
 if [[ $current_dpi -gt 96 ]]; then
