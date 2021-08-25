@@ -9,4 +9,4 @@ choice="$(fzf --preview 'bat --color=always {} 2> /dev/null' --preview-window 'd
 
 [[ -z "$choice" ]] && exit 1
 
-nvim "$DOTFILES/$choice" +"cd $DOTFILES"
+nvim "$choice" +"cd $DOTFILES"
