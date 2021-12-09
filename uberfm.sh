@@ -27,5 +27,5 @@ else
   exec 3> "$FIFO_UEBERZUG"
   trap cleanup EXIT
   vifm --choose-dir - "$@" 3>&-
-  "$SCRIPTS"/vifmimg clear
+  "$SCRIPTS"/vifm/vifmimg.sh clear
 fi
