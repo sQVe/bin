@@ -8,7 +8,7 @@ target=/usr/local/bin
 
 ln -s "/home/sqve/.bin/dots.sh" "$target/dots"
 ln -s "/home/sqve/.bin/far.sh" "$target/far"
-ln -s "/home/sqve/.bin/github-clone.sh" "$target/github-clone"
+ln -s "/home/sqve/.bin/ghc.sh" "$target/ghc"
 ln -s "/home/sqve/.bin/laptop-keyboard-toggle.sh" "$target/laptop-keyboard-toggle"
 ln -s "/home/sqve/.bin/lock.sh" "$target/lock"
 ln -s "/home/sqve/.bin/mons-layout.sh" "$target/mons-layout"
