@@ -4,7 +4,7 @@
 #  ┣┳┛┣╸ ┣━┛┃ ┃┗━┓    ┃┃┃┣┳┛ ┃ ┗┳┛
 #  ╹┗╸┗━╸╹  ┗━┛┗━┛   ╺┻┛╹╹┗╸ ╹  ╹
 
-repositories=$(fd --hidden --exclude ".{local}" --type directory '^.git$' . | sed -r 's/\/.git$//')
+repositories=$(fd --hidden --strip-cwd-prefix --exclude ".{local}" '^.git$' | sed -r 's/\/.git$//')
 
 if [[ -z "$repositories" ]]; then
   echo "No repositories found. Exiting."
@@ -17,7 +17,11 @@ dirty_repositories=()
 for repo in $repositories; do
   echo "  ✔  $repo"
 
-  if [[ -n "$(git -C "$repo" status --short)" ]]; then
+  if [[ $(git -C "$repo" rev-parse --is-bare-repository) == "true" ]]; then
+    break
+  fi
+
+  if [[ -n $(git -C "$repo" status --short) ]]; then
     dirty_repositories+=("$repo")
   fi
 done

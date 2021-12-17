@@ -4,9 +4,9 @@
 #  ┣┳┛┣╸ ┣━┛┃ ┃┗━┓   ┣┻┓┣╸ ┣━┫┃┃┗┫ ┃┃
 #  ╹┗╸┗━╸╹  ┗━┛┗━┛   ┗━┛┗━╸╹ ╹╹╹ ╹╺┻┛
 
-repositories=$(fd --hidden --exclude ".{local}" --type directory '^.git$' . | sed -r 's/\/.git$//')
+repositories=$(fd --hidden --strip-cwd-prefix --exclude ".{local}" '^.git$' | sed -r 's/\/.git$//')
 
-ping -c 1 -W 15 1.1.1.1 &>/dev/null || (echo "Unable to connect to internet. Exiting" && exit 1)
+ping -c 1 -W 15 1.1.1.1 &> /dev/null || (echo "Unable to connect to internet. Exiting" && exit 1)
 
 if [[ -z "$repositories" ]]; then
   echo "No repositories found. Exiting."
@@ -18,11 +18,15 @@ fi
 behind_repos=()
 fastforwardable_repos=()
 for repo in $repositories; do
-  status=$(git -C "$repo" fetch &>/dev/null && git -C "$repo" status)
+  if [[ $(git -C "$repo" rev-parse --is-bare-repository) == "true" ]]; then
+    break
+  fi
+
+  status=$(git -C "$repo" fetch &> /dev/null && git -C "$repo" status)
 
   if [[ -n "$(echo "$status" | rg 'branch is behind')" ]]; then
-    if [[ -n "$(echo "$status" | rg 'can be fast-forwarded')" ]] &&
-      [[ -z "$(echo "$status" | rg -o 'Changes not staged')" ]]; then
+    if [[ -n "$(echo "$status" | rg 'can be fast-forwarded')" ]] \
+      && [[ -z "$(echo "$status" | rg -o 'Changes not staged')" ]]; then
       fastforwardable_repos+=("$repo")
       echo "  🔄  $repo"
     else
