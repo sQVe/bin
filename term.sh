@@ -6,14 +6,14 @@
 
 while [[ "$1" =~ ^- && ! "$1" == "--" ]]; do
   case $1 in
-  -i | --instance)
-    shift
-    instance=(--class "$1")
-    ;;
-  -t | --title)
-    shift
-    title=(--title "$1")
-    ;;
+    -i | --instance)
+      shift
+      instance=(--class "$1")
+      ;;
+    -t | --title)
+      shift
+      title=(--title "$1")
+      ;;
   esac
   shift
 done
@@ -23,7 +23,7 @@ if [[ "$1" == '--' ]]; then shift; fi
 function openTerminal() {
   [[ $1 -ne 0 ]] && return 1
 
-  alacritty "${instance[@]}" "${title[@]}" &>/dev/null &
+  alacritty "${instance[@]}" "${title[@]}" &> /dev/null &
 }
 
 # Open terminal at given path.
@@ -39,7 +39,7 @@ function openPathInTerminal() {
     path=$(dirname "$path")
   fi
 
-  alacritty --working-directory "$path" &>/dev/null &
+  alacritty --working-directory "$path" &> /dev/null &
 }
 
 # Open terminal and run given executable with options.
@@ -55,9 +55,9 @@ function openExecutableInTerminal() {
 
   if [[ -n "$path" ]]; then
     # Safely open path in executable. The quoting is needed to handle paths with spaces.
-    alacritty "${instance[@]}" "${title[@]}" -e zsh -ic "$executable \"$path\";zsh" &>/dev/null &
+    alacritty "${instance[@]}" "${title[@]}" -e zsh -ic "$executable \"$path\";zsh" &> /dev/null &
   else
-    alacritty "${instance[@]}" "${title[@]}" -e zsh -ic "$executable $*;zsh" &>/dev/null &
+    alacritty "${instance[@]}" "${title[@]}" -e zsh -ic "$executable $*;zsh" &> /dev/null &
   fi
 
 }
