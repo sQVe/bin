@@ -4,8 +4,14 @@
 #   ┃ ┣╸ ┣┳┛┃┃┃
 #   ╹ ┗━╸╹┗╸╹ ╹
 
+single_instance="--single-instance"
+
 while [[ "$1" =~ ^- && ! "$1" == "--" ]]; do
   case $1 in
+    -d | --detach)
+      shift
+      single_instance=""
+      ;;
     -i | --instance)
       shift
       instance=(--class "$1")
@@ -23,7 +29,7 @@ if [[ "$1" == '--' ]]; then shift; fi
 function openTerminal() {
   [[ $1 -ne 0 ]] && return 1
 
-  alacritty "${instance[@]}" "${title[@]}" &> /dev/null &
+  kitty "${single_instance}" "${instance[@]}" "${title[@]}" &> /dev/null &
 }
 
 # Open terminal at given path.
@@ -39,7 +45,7 @@ function openPathInTerminal() {
     path=$(dirname "$path")
   fi
 
-  alacritty --working-directory "$path" &> /dev/null &
+  kitty "${single_instance}" --working-directory "$path" &> /dev/null &
 }
 
 # Open terminal and run given executable with options.
@@ -55,9 +61,9 @@ function openExecutableInTerminal() {
 
   if [[ -n "$path" ]]; then
     # Safely open path in executable. The quoting is needed to handle paths with spaces.
-    alacritty "${instance[@]}" "${title[@]}" -e zsh -ic "$executable \"$path\";zsh" &> /dev/null &
+    kitty "${single_instance}" "${instance[@]}" "${title[@]}" -e zsh -ic "$executable \"$path\";zsh" &> /dev/null &
   else
-    alacritty "${instance[@]}" "${title[@]}" -e zsh -ic "$executable $*;zsh" &> /dev/null &
+    kitty "${single_instance}" "${instance[@]}" "${title[@]}" -e zsh -ic "$executable $*;zsh" &> /dev/null &
   fi
 
 }
