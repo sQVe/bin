@@ -4,7 +4,7 @@
 #  ┣┳┛┣╸ ┣━┛┃ ┃┗━┓   ┣┻┓┣╸ ┣━┫┃┃┗┫ ┃┃
 #  ╹┗╸┗━╸╹  ┗━┛┗━┛   ┗━┛┗━╸╹ ╹╹╹ ╹╺┻┛
 
-repositories=$(fd --hidden --strip-cwd-prefix --exclude ".{local}" '^.git$' | sed -r 's/\/.git$//')
+repositories=$(fd --hidden --strip-cwd-prefix --exclude ".{local}" '^.git$' | sed -r 's/\/.git\/?$//')
 
 ping -c 1 -W 15 1.1.1.1 &> /dev/null || (echo "Unable to connect to internet. Exiting" && exit 1)
 

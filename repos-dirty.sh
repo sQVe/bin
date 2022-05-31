@@ -4,7 +4,7 @@
 #  ┣┳┛┣╸ ┣━┛┃ ┃┗━┓    ┃┃┃┣┳┛ ┃ ┗┳┛
 #  ╹┗╸┗━╸╹  ┗━┛┗━┛   ╺┻┛╹╹┗╸ ╹  ╹
 
-repositories=$(fd --hidden --strip-cwd-prefix --exclude ".{local}" '^.git$' | sed -r 's/\/.git$//')
+repositories=$(fd --hidden --strip-cwd-prefix --exclude ".{local}" '^.git$' | sed -r 's/\/.git\/?$//')
 
 if [[ -z "$repositories" ]]; then
   echo "No repositories found. Exiting."
