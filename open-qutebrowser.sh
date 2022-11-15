@@ -4,13 +4,9 @@
 #  ┃ ┃┣━┛┣╸ ┃┗┫   ┃┓┃┃ ┃ ┃ ┣╸ ┣┻┓┣┳┛┃ ┃┃╻┃┗━┓┣╸ ┣┳┛
 #  ┗━┛╹  ┗━╸╹ ╹   ┗┻┛┗━┛ ╹ ┗━╸┗━┛╹┗╸┗━┛┗┻┛┗━┛┗━╸╹┗╸
 
-current_dpi=$(rg 'Xft.dpi' "$DOTFILES/config/Xresources" | rg -o '\d+')
+current_dpi=$(rg 'Xft.dpi' "${DOTFILES}/config/Xresources" | rg -o '\d+')
 
-if ! pgrep qutebrowser; then
-  i3-msg workspace "3  "
-fi
-
-if [[ $current_dpi -gt 96 ]]; then
+if [[ ${current_dpi} -gt 96 ]]; then
   QT_SCALE_FACTOR=2 qutebrowser "$@"
 else
   qutebrowser "$@"
