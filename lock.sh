@@ -10,6 +10,9 @@ pgrep i3lock && exit
 (sleep 1m && xset dpms force standby) &
 dpms_standby=$!
 
+(sleep 1m && sudo -K) &
+sudo_revoke=$!
+
 (sleep 15m && gpg-connect-agent reloadagent /bye) &
 gpg_clear=$!
 
@@ -25,5 +28,6 @@ dunstctl set-paused false
 xset dpms 240 240 240
 xcompmgr -c -l 0 -t 0 -r 0 -o 0 &
 
-kill $dpms_standby
-kill $gpg_clear
+kill ${dpms_standby}
+kill ${sudo_revoke}
+kill ${gpg_clear}
