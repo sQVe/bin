@@ -27,7 +27,9 @@ if [[ "$1" == '--' ]]; then shift; fi
 
 # Simply open terminal if given no arguments.
 function openTerminal() {
-  [[ $1 -ne 0 ]] && return 1
+  if [[ $# -ne 0 ]]; then
+    return 1
+  fi
 
   kitty "${single_instance}" "${instance[@]}" "${title[@]}" &> /dev/null &
 }
@@ -36,16 +38,19 @@ function openTerminal() {
 function openPathInTerminal() {
   local path
 
-  # Ensure absolute path
+  # Ensure absolute path.
   path=$(readlink -e "$1")
 
-  [[ -z "$path" ]] && return 1
-  # Get directory name if given file path.
-  if [[ -f $path ]]; then
-    path=$(dirname "$path")
+  if [[ -z "${path}" ]]; then
+    return 1
   fi
 
-  kitty "${single_instance}" --working-directory "$path" &> /dev/null &
+  # Get directory name if given file path.
+  if [[ -f ${path} ]]; then
+    path=$(dirname "${path}")
+  fi
+
+  kitty "${single_instance}" --directory "${path}" &> /dev/null &
 }
 
 # Open terminal and run given executable with options.
@@ -59,7 +64,7 @@ function openExecutableInTerminal() {
   # Ensure absolute path
   path=$(readlink -e "$*")
 
-  if [[ -n "$path" ]]; then
+  if [[ -n "${path}" ]]; then
     # Safely open path in executable. The quoting is needed to handle paths with spaces.
     kitty "${single_instance}" "${instance[@]}" "${title[@]}" -e zsh -ic "$executable \"$path\";zsh" &> /dev/null &
   else
@@ -68,5 +73,5 @@ function openExecutableInTerminal() {
 
 }
 
-openTerminal $# || openPathInTerminal "$*" || openExecutableInTerminal "$@"
+openTerminal "$#" || openPathInTerminal "$*" || openExecutableInTerminal "$@"
 disown

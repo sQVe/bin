@@ -5,7 +5,7 @@
 #  ┗━╸┗━┛┗━╸╹ ╹
 
 # Exit early when already locked.
-pgrep i3lock && exit
+pgrep -x i3lock && exit
 
 (sleep 1m && xset dpms force standby) &
 dpms_standby=$!
@@ -28,6 +28,6 @@ dunstctl set-paused false
 xset dpms 240 240 240
 xcompmgr -c -l 0 -t 0 -r 0 -o 0 &
 
-kill ${dpms_standby}
-kill ${sudo_revoke}
-kill ${gpg_clear}
+kill "${dpms_standby}"
+kill "${sudo_revoke}"
+kill "${gpg_clear}"

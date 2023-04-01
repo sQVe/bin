@@ -4,7 +4,7 @@
 #  ┣┳┛┃ ┃┃ ┃ ┃
 #  ╹┗╸┗━┛┗━┛ ╹
 
-temp_file_path='/tmp/next-root-pwd'
+readonly next_root_pwd='/tmp/next-root-pwd'
 
-pwd >| "$temp_file_path"
+pwd >| "${next_root_pwd}"
 sudo -i "$@"
