@@ -5,7 +5,7 @@
 #  ┗━┛╹ ╹
 
 readonly xresources="${DOTFILES}/config/Xresources"
-default_dpi=$(xrdb -query | awk '/Xft.dpi/ {print $2}')
+default_dpi=$(rg --no-line-number Xft.dpi "${xresources}" | awk '{print $2}')
 
 # Ensure Xorg starts in home directory.
 cd "${HOME}" || {
