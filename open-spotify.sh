@@ -4,4 +4,4 @@
 #  ┃ ┃┣━┛┣╸ ┃┗┫   ┗━┓┣━┛┃ ┃ ┃ ┃┣╸ ┗┳┛
 #  ┗━┛╹  ┗━╸╹ ╹   ┗━┛╹  ┗━┛ ╹ ╹╹   ╹
 
-spotify --force-device-scale-factor=1.25 %U
+spotify --force-device-scale-factor=1.25 "$@"

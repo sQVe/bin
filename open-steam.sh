@@ -4,4 +4,4 @@
 # ┃ ┃┣━┛┣╸ ┃┗┫   ┗━┓ ┃ ┣╸ ┣━┫┃┃┃
 # ┗━┛╹  ┗━╸╹ ╹   ┗━┛ ╹ ┗━╸╹ ╹╹ ╹
 
-steam -forcedesktopscaling 1.25
+steam -forcedesktopscaling 1.25 "$@"
