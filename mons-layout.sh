@@ -4,44 +4,38 @@
 #  ┃┃┃┃ ┃┃┗┫┗━┓   ┃  ┣━┫┗┳┛┃ ┃┃ ┃ ┃
 #  ╹ ╹┗━┛╹ ╹┗━┛   ┗━╸╹ ╹ ╹ ┗━┛┗━┛ ╹
 
-gpu_mode=$(envycontrol --query)
+vga_controllers=$(lspci -v | rg "VGA controller")
+
+if [[ $(echo "${vga_controllers}" | wc -l) == '2' ]]; then
+  gpu_mode="hGPU"
+else
+  if echo "${vga_controllers}" | rg 'NVIDIA' &> /dev/null; then
+    gpu_mode="dGPU"
+  else
+    gpu_mode="iGPU"
+  fi
+fi
 
 case "$1" in
   mancave)
-    if [[ "${gpu_mode}" == 'integrated' ]]; then
-      xrandr \
-        --output eDP-1-1 --mode 2560x1600 --pos 2560x0 --rotate normal \
-        --output DP-1-1-2 --mode 2560x1440 --pos 0x0 --rotate inverted --primary \
-        --output DP-1-1-3 --mode 2560x1440 --pos 0x1440 --rotate normal \
-        --output DP-0 --off \
-        --output DP-1 --off \
-        --output DP-1-1 --off \
-        --output DP-1-1-1 --off \
-        --output DP-1-2 --off \
-        --output DP-1-3 --off \
-        --output DP-2 --off \
-        --output HDMI-0 --off \
-        --output HDMI-1-1 --off \
-        --output HDMI-1-2 --off \
-        --output HDMI-1-3 --off
-    else
-      notify-send "Unable to load to mancave layout, switch to integrated GPU."
-    fi
+    case "${gpu_mode}" in
+      iGPU)
+        # TODO: Add xrandr command.
+        echo "iGPU"
+        ;;
+      hGPU)
+        # TODO: Add xrandr command.
+        echo "hGPU"
+        ;;
+      *)
+        notify-send "Unable to load to mancave layout, switch to integrated GPU."
+        ;;
+    esac
     ;;
   hups)
-    if [[ "${gpu_mode}" == 'nvidia' ]]; then
-      xrandr \
-        --output DP-0 --mode 3840x1600 --pos 0x0 --rotate normal --primary \
-        --output DP-1 --off \
-        --output DP-1-1 --off \
-        --output DP-1-2 --off \
-        --output DP-1-3 --off \
-        --output DP-2 --off \
-        --output HDMI-0 --off \
-        --output HDMI-1-1 --off \
-        --output HDMI-1-2 --off \
-        --output HDMI-1-3 --off \
-        --output eDP-1-1 --off
+    if [[ "${gpu_mode}" == 'dGPU' ]]; then
+      # TODO: Add xrandr command.
+      echo "dGPU"
     else
       notify-send "Unable to load to hups layout, switch to dedicated GPU."
     fi
