@@ -34,8 +34,11 @@ case "$1" in
     ;;
   hups)
     if [[ "${gpu_mode}" == 'dGPU' ]]; then
-      # TODO: Add xrandr command.
-      echo "dGPU"
+      xrandr --output DP-0 --mode 3840x1600 --pos 0x0 --rotate normal --primary \
+        --output DP-1 --off \
+        --output HDMI-0 --off \
+        --output DP-2 --off \
+        --output None-1-1 --off
     else
       notify-send "Unable to load to hups layout, switch to dedicated GPU."
     fi
