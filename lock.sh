@@ -20,6 +20,7 @@ pkill xcompmgr
 
 i3lock -e -n -c 3c3836
 
+xset s 240 0
 dunstctl set-paused false
 xcompmgr -c -l 0 -t 0 -r 0 -o 0 &
 
