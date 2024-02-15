@@ -8,7 +8,7 @@ set -euo pipefail
 
 # Find all git repositories in the current directory.
 find_repositories() {
-  fd --type directory --hidden --no-ignore --exclude ".{local,steam}" '^.git$' | sed -r 's/\/.git\/?$//'
+  fd --type directory --hidden --no-ignore --exclude '.local' --exclude '.steam' --exclude 'Steam' '^.git$' | sed -r 's/\/.git\/?$//'
 }
 
 # Check the status of a repository.

@@ -5,7 +5,7 @@
 #  ╹┗╸┗━╸╹  ┗━┛┗━┛   ┗━┛┗━╸╹ ╹╹╹ ╹╺┻┛
 
 repositories=$(
-  fd --type directory --hidden --no-ignore --exclude ".{local,steam}" '^.git$' | sed -r 's/\/.git\/?$//'
+  fd --type directory --hidden --no-ignore --exclude '.local' --exclude '.steam' --exclude 'Steam' '^.git$' | sed -r 's/\/.git\/?$//'
 )
 
 ping -c 1 -W 15 1.1.1.1 &> /dev/null || (echo "Unable to connect to internet. Exiting" && exit 1)

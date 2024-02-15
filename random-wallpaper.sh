@@ -5,7 +5,7 @@
 #  ╹┗╸╹ ╹╹ ╹╺┻┛┗━┛╹ ╹   ┗┻┛╹ ╹┗━╸┗━╸╹  ╹ ╹╹  ┗━╸╹┗╸
 
 function get_random_directory() {
-  fd . --type d --max-depth 1 "$1" | shuf -n 1
+  fd . --type directory --max-depth 1 "$1" | shuf -n 1
 }
 
 source=$(get_random_directory "$PICTURES/wallpapers")
