@@ -8,7 +8,7 @@ readonly xresources="${DOTFILES}/config/Xresources"
 default_dpi=$(rg --no-line-number Xft.dpi "${xresources}" | awk '{print $2}')
 
 # Ensure Xorg starts in home directory.
-buildin cd "${HOME}" || {
+builtin cd "${HOME}" || {
   printf "Failed to change directory to HOME.\n"
   exit 1
 }
