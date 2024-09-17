@@ -8,7 +8,5 @@ function get_random_directory() {
   fd . --type directory --max-depth 1 "$1" | shuf -n 1
 }
 
-source=$(get_random_directory "$PICTURES/wallpapers")
-random_category=$(get_random_directory "$source")
-
-[[ -n "$random_category" ]] && feh --randomize --bg-fill --no-fehbg "$random_category"/*
+work=$(get_random_directory "$PICTURES/art/simon-stålenhag")
+[[ -n "$work" ]] && feh --randomize --bg-fill --no-fehbg "$work"/*
