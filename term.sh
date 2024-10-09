@@ -4,34 +4,35 @@
 #   ┃ ┣╸ ┣┳┛┃┃┃
 #   ╹ ┗━╸╹┗╸╹ ╹
 
-single_instance="--single-instance"
+# Terminal should be opened in daemon mode by default, making it more performant.
+single_instance=true
 
 while [[ "$1" =~ ^- && ! "$1" == "--" ]]; do
-  case $1 in
-    -d | --detach)
-      shift
-      single_instance=""
-      ;;
-    -i | --instance)
-      shift
-      instance=(--class "$1")
-      ;;
-    -t | --title)
-      shift
-      title=(--title "$1")
+  case "$1" in
+    --detach)
+      # Detach new terminal from the daemon.
+      single_instance=false
       ;;
   esac
+
+  # Shift past the processed options
   shift
 done
+
+# Shift past the '--' argument if present
 if [[ "$1" == '--' ]]; then shift; fi
 
 # Simply open terminal if given no arguments.
 function openTerminal() {
-  if [[ $# -ne 0 ]]; then
+  if [[ "$1" -ne 0 ]]; then
     return 1
   fi
 
-  kitty "${single_instance}" "${instance[@]}" "${title[@]}" &> /dev/null &
+  if [[ "${single_instance}" = true ]]; then
+    kitty --single-instance &> /dev/null &
+  else
+    kitty &> /dev/null &
+  fi
 }
 
 # Open terminal at given path.
@@ -50,7 +51,11 @@ function openPathInTerminal() {
     path=$(dirname "${path}")
   fi
 
-  kitty "${single_instance}" --directory "${path}" &> /dev/null &
+  if [[ "${single_instance}" = true ]]; then
+    kitty --single-instance --directory "${path}" &> /dev/null &
+  else
+    kitty --directory "${path}" &> /dev/null &
+  fi
 }
 
 # Open terminal and run given executable with options.
@@ -65,12 +70,18 @@ function openExecutableInTerminal() {
   path=$(readlink -e "$*")
 
   if [[ -n "${path}" ]]; then
-    # Safely open path in executable. The quoting is needed to handle paths with spaces.
-    kitty "${single_instance}" "${instance[@]}" "${title[@]}" -e zsh -ic "$executable \"$path\";zsh" &> /dev/null &
+    if [[ "${single_instance}" = true ]]; then
+      kitty --single-instance -e zsh -ic "${executable} \"${path}\";zsh" &> /dev/null &
+    else
+      kitty -e zsh -ic "${executable} \"${path}\";zsh" &> /dev/null &
+    fi
   else
-    kitty "${single_instance}" "${instance[@]}" "${title[@]}" -e zsh -ic "$executable $*;zsh" &> /dev/null &
+    if [[ "${single_instance}" = true ]]; then
+      kitty --single-instance -e zsh -ic "${executable};zsh" &> /dev/null &
+    else
+      kitty -e zsh -ic "${executable};zsh" &> /dev/null &
+    fi
   fi
-
 }
 
 openTerminal "$#" || openPathInTerminal "$*" || openExecutableInTerminal "$@"
