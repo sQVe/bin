@@ -27,7 +27,7 @@ git fetch && git merge --ff-only
 # Add all new files.
 git add .
 
-commit_message=$(git diff --no-ext-diff --cached | sgpt "${commit_message_prompt}")
+commit_message=$(git diff --no-ext-diff --cached | aichat "${commit_message_prompt}")
 
 if [[ -z "${commit_message}" ]]; then
   echo "No commit message. Exiting."
