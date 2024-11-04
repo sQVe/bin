@@ -4,85 +4,81 @@
 #   ┃ ┣╸ ┣┳┛┃┃┃
 #   ╹ ┗━╸╹┗╸╹ ╹
 
+# Enable strict mode.
+set -euo pipefail
+
 # Terminal should be opened in daemon mode by default, making it more performant.
 single_instance=true
 
-while [[ "$1" =~ ^- && ! "$1" == "--" ]]; do
+# Window class to set for terminal.
+window_class="kitty"
+
+while (($# > 0)) && [[ "$1" =~ ^- && ! "$1" == "--" ]]; do
   case "$1" in
+    --class)
+      shift
+      if [[ -z "$1" ]]; then
+        echo "Error: --class requires a value" >&2
+        exit 1
+      fi
+
+      # Set window class.
+      window_class="$1"
+      ;;
     --detach)
       # Detach new terminal from the daemon.
       single_instance=false
       ;;
   esac
 
-  # Shift past the processed options
+  # Shift past the processed options.
   shift
 done
 
 # Shift past the '--' argument if present
-if [[ "$1" == '--' ]]; then shift; fi
+if (($# > 0)) && [[ "$1" == '--' ]]; then shift; fi
 
-# Simply open terminal if given no arguments.
-function openTerminal() {
-  if [[ "$1" -ne 0 ]]; then
-    return 1
-  fi
+function execute_kitty() {
+  local cmd=("kitty")
 
-  if [[ "${single_instance}" = true ]]; then
-    kitty --single-instance &> /dev/null &
-  else
-    kitty &> /dev/null &
-  fi
+  [[ "${single_instance}" == true ]] && cmd+=("--single-instance")
+  cmd+=("--class" "${window_class}")
+  cmd+=("$@")
+  "${cmd[@]}" &> /dev/null &
 }
 
-# Open terminal at given path.
-function openPathInTerminal() {
-  local path
-
-  # Ensure absolute path.
-  path=$(readlink -e "$1")
-
-  if [[ -z "${path}" ]]; then
-    return 1
-  fi
-
-  # Get directory name if given file path.
-  if [[ -f ${path} ]]; then
-    path=$(dirname "${path}")
-  fi
-
-  if [[ "${single_instance}" = true ]]; then
-    kitty --single-instance --directory "${path}" &> /dev/null &
-  else
-    kitty --directory "${path}" &> /dev/null &
-  fi
+# Open terminal without arguments.
+function open_terminal() {
+  [[ "$1" -ne 0 ]] && return 1
+  execute_kitty
+  return 0
 }
 
-# Open terminal and run given executable with options.
-function openExecutableInTerminal() {
-  local executable
-  local path
+# Open terminal at specified path.
+function open_path_in_terminal() {
+  local target_path
 
-  executable="$1"
+  target_path=$(readlink -e "$1") || return 1
+  [[ -f "${target_path}" ]] && target_path=$(dirname "${target_path}")
+  execute_kitty --directory "${target_path}"
+  return 0
+}
+
+# Open terminal and execute command.
+function open_executable_in_terminal() {
+  local executable="$1"
+  local target_path
+
   shift
+  target_path=$(readlink -e "$*" 2> /dev/null || echo "")
 
-  # Ensure absolute path
-  path=$(readlink -e "$*")
-
-  if [[ -n "${path}" ]]; then
-    if [[ "${single_instance}" = true ]]; then
-      kitty --single-instance -e zsh -ic "${executable} \"${path}\";zsh" &> /dev/null &
-    else
-      kitty -e zsh -ic "${executable} \"${path}\";zsh" &> /dev/null &
-    fi
+  if [[ -n "${target_path}" ]]; then
+    execute_kitty -e zsh -ic "${executable} \"${target_path}\";zsh"
   else
-    if [[ "${single_instance}" = true ]]; then
-      kitty --single-instance -e zsh -ic "${executable};zsh" &> /dev/null &
-    else
-      kitty -e zsh -ic "${executable};zsh" &> /dev/null &
-    fi
+    execute_kitty -e zsh -ic "${executable};zsh"
   fi
+  return 0
 }
 
-openTerminal "$#" || openPathInTerminal "$*" || openExecutableInTerminal "$@"
+open_terminal "$#" || open_path_in_terminal "$*" || open_executable_in_terminal "$@"
 disown
