@@ -13,6 +13,9 @@ single_instance=true
 # Window class to set for terminal.
 window_class="kitty"
 
+# Window title to set for terminal.
+window_title=""
+
 while (($# > 0)) && [[ "$1" == -* && "$1" != "--" ]]; do
   case "$1" in
     --class)
@@ -25,6 +28,14 @@ while (($# > 0)) && [[ "$1" == -* && "$1" != "--" ]]; do
       ;;
     --detach)
       single_instance=false
+      ;;
+    --title)
+      if [[ $# -lt 2 ]]; then
+        echo "Error: --title requires a value" >&2
+        exit 1
+      fi
+      shift
+      window_title="$1"
       ;;
     *)
       echo "Unknown option: $1" >&2
@@ -42,6 +53,7 @@ function execute_kitty() {
 
   [[ "${single_instance}" == true ]] && cmd+=("--single-instance")
   cmd+=("--class" "${window_class}")
+  [[ -n "${window_title}" ]] && cmd+=("--title" "${window_title}")
   cmd+=("$@")
   "${cmd[@]}" &> /dev/null &
 }
