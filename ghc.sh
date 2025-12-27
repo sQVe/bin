@@ -23,16 +23,16 @@ if [[ $# -eq 1 ]]; then
   input="${1%.git}"
   input="${input%/}"
 
-  if is_url "$input"; then
-    identifier=$(extract_field 4-5 "$input")
-  elif has_slash "$input"; then
-    identifier="$input"
+  if is_url "${input}"; then
+    identifier=$(extract_field 4-5 "${input}")
+  elif has_slash "${input}"; then
+    identifier="${input}"
   else
-    identifier="sQVe/$input"
+    identifier="sQVe/${input}"
   fi
 
-  name=$(extract_field 1 "$identifier")
-  repository=$(extract_field 2 "$identifier")
+  name=$(extract_field 1 "${identifier}")
+  repository=$(extract_field 2 "${identifier}")
 elif [[ $# -eq 2 ]]; then
   name="$1"
   repository="$2"

@@ -18,7 +18,7 @@ case "${1:-}" in
   lock)
     qs msg -c noctalia-shell lockScreen lock
     ;;
-  shutdown|poweroff)
+  shutdown | poweroff)
     backup_history
     systemctl poweroff
     ;;
