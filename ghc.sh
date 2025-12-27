@@ -5,34 +5,40 @@
 # ┗━┛╹ ╹┗━╸
 # GitHub clone.
 
-function cut() {
+set -euo pipefail
+
+extract_field() {
   command cut -d '/' -f "$1" <<< "$2"
 }
 
-function is_url() {
-  rg '^http' <<< "$1"
+is_url() {
+  grep -qE '^https?://' <<< "$1"
 }
 
-function is_identifier() {
-  rg '/' <<< "$1"
+has_slash() {
+  grep -q '/' <<< "$1"
 }
 
 if [[ $# -eq 1 ]]; then
-  if [[ $(is_url "$1") ]]; then
-    identifier=$(cut 4-5 "$1")
-  elif [[ $(is_identifier "$1") ]]; then
-    identifier="$1"
+  input="${1%.git}"
+  input="${input%/}"
+
+  if is_url "$input"; then
+    identifier=$(extract_field 4-5 "$input")
+  elif has_slash "$input"; then
+    identifier="$input"
   else
-    identifier="sQVe/$1"
+    identifier="sQVe/$input"
   fi
 
-  name=$(cut 1 "$identifier")
-  repository=$(cut 2 "$identifier")
+  name=$(extract_field 1 "$identifier")
+  repository=$(extract_field 2 "$identifier")
 elif [[ $# -eq 2 ]]; then
-  name=$1
-  repository=$2
+  name="$1"
+  repository="$2"
 else
-  echo "No valid arguments. Exiting." && exit 0
+  echo "Usage: ghc <url|user/repo|repo> or ghc <user> <repo>" >&2
+  exit 1
 fi
 
-git clone "git@github.com:$name/$repository.git"
+git clone "git@github.com:${name}/${repository}.git"

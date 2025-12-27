@@ -13,25 +13,24 @@ single_instance=true
 # Window class to set for terminal.
 window_class="kitty"
 
-while (($# > 0)) && [[ "$1" =~ ^- && ! "$1" == "--" ]]; do
+while (($# > 0)) && [[ "$1" == -* && "$1" != "--" ]]; do
   case "$1" in
     --class)
-      shift
-      if [[ -z "$1" ]]; then
+      if [[ $# -lt 2 ]]; then
         echo "Error: --class requires a value" >&2
         exit 1
       fi
-
-      # Set window class.
+      shift
       window_class="$1"
       ;;
     --detach)
-      # Detach new terminal from the daemon.
       single_instance=false
       ;;
+    *)
+      echo "Unknown option: $1" >&2
+      exit 1
+      ;;
   esac
-
-  # Shift past the processed options.
   shift
 done
 
@@ -80,5 +79,6 @@ function open_executable_in_terminal() {
   return 0
 }
 
-open_terminal "$#" || open_path_in_terminal "$*" || open_executable_in_terminal "$@"
-disown
+if open_terminal "$#" || open_path_in_terminal "${1:-}" || open_executable_in_terminal "$@"; then
+  disown
+fi

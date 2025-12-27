@@ -4,31 +4,49 @@
 #  ┣┳┛┣╸ ┣━┛┃ ┃┗━┓   ┣┻┓┣╸ ┣━┫┃┃┗┫ ┃┃
 #  ╹┗╸┗━╸╹  ┗━┛┗━┛   ┗━┛┗━╸╹ ╹╹╹ ╹╺┻┛
 
-repositories=$(
-  fd --type directory --hidden --no-ignore --exclude '.local' --exclude '.steam' --exclude 'Steam' '^.git$' | sed -r 's/\/.git\/?$//'
-)
+set -euo pipefail
 
-ping -c 1 -W 15 1.1.1.1 &> /dev/null || (echo "Unable to connect to internet. Exiting" && exit 1)
+find_repositories() {
+  fd --type directory --hidden --no-ignore \
+    --exclude '.cache' \
+    --exclude '.claude' \
+    --exclude '.local' \
+    --exclude '.steam' \
+    --exclude 'Steam' \
+    --exclude 'dev' \
+    '^.git$' | sed -r 's/\/.git\/?$//'
+}
+
+if ! ping -c 1 -W 15 1.1.1.1 &> /dev/null; then
+  echo "Unable to connect to internet. Exiting" >&2
+  exit 1
+fi
+
+repositories=$(find_repositories)
 
 if [[ -z "${repositories}" ]]; then
   echo "No repositories found. Exiting."
-  exit
-else
-  echo "Found $(echo "${repositories}" | wc -l) repositories. Checking status:"
+  exit 0
 fi
+
+repo_count=$(echo "${repositories}" | wc -l)
+echo "Found ${repo_count} repositories. Checking status:"
 
 behind_repos=()
 fastforwardable_repos=()
-for repo in ${repositories}; do
-  if [[ $(git -C "${repo}" rev-parse --is-bare-repository) == "true" ]]; then
-    break
+
+while IFS= read -r repo; do
+  if [[ $(git -C "${repo}" rev-parse --is-bare-repository 2> /dev/null) == "true" ]]; then
+    continue
   fi
 
-  status=$(git -C "${repo}" fetch &> /dev/null && git -C "${repo}" status)
+  if ! status=$(git -C "${repo}" fetch 2> /dev/null && git -C "${repo}" status 2> /dev/null); then
+    echo "  ⚠ ${repo} (fetch failed)"
+    continue
+  fi
 
-  if [[ -n "$(echo "${status}" | rg 'branch is behind')" ]]; then
-    if [[ -n "$(echo "${status}" | rg 'can be fast-forwarded')" ]] \
-      && [[ -z "$(echo "${status}" | rg -o 'Changes not staged')" ]]; then
+  if echo "${status}" | rg -q 'branch is behind'; then
+    if echo "${status}" | rg -q 'can be fast-forwarded' && ! echo "${status}" | rg -q 'Changes not staged'; then
       fastforwardable_repos+=("${repo}")
       echo "  🔄  ${repo}"
     else
@@ -38,29 +56,28 @@ for repo in ${repositories}; do
   else
     echo "  ✔ ${repo}"
   fi
-done
-behind_repos_list=$(printf '  %s\n' "${behind_repos[@]}")
-fastforwardable_repos_list=$(printf '  %s\n' "${fastforwardable_repos[@]}")
+done <<< "${repositories}"
 
-if [[ -z "${fastforwardable_repos[*]}" ]] && [[ -z "${behind_repos[*]}" ]]; then
+if [[ ${#fastforwardable_repos[@]} -eq 0 ]] && [[ ${#behind_repos[@]} -eq 0 ]]; then
   echo "No repositories behind found."
-else
-  if [[ -n ${behind_repos[*]} ]]; then
-    echo "Found $(echo "${behind_repos_list}" | wc -l) non fastforwardable repositories behind:"
-    echo "${behind_repos_list}"
-  fi
+  exit 0
+fi
 
-  if [[ -n ${fastforwardable_repos[*]} ]]; then
-    echo "Found $(echo "${fastforwardable_repos_list}" | wc -l) repositories to fast-forward:"
-    echo "${fastforwardable_repos_list}"
-    echo -n "Would you like to fast-forward? [Y/n] "
-    read -r answer
+if [[ ${#behind_repos[@]} -gt 0 ]]; then
+  echo "Found ${#behind_repos[@]} non fastforwardable repositories behind:"
+  printf '  %s\n' "${behind_repos[@]}"
+fi
 
-    if [[ "${answer}" != "N" && "${answer}" != "n" ]]; then
-      for repo in ${fastforwardable_repos_list}; do
-        git -C "${repo}" pull
-        git -C "${repo}" submodule update --init --recursive
-      done
-    fi
+if [[ ${#fastforwardable_repos[@]} -gt 0 ]]; then
+  echo "Found ${#fastforwardable_repos[@]} repositories to fast-forward:"
+  printf '  %s\n' "${fastforwardable_repos[@]}"
+  echo -n "Would you like to fast-forward? [Y/n] "
+  read -r answer
+
+  if [[ "${answer}" != "N" && "${answer}" != "n" ]]; then
+    for repo in "${fastforwardable_repos[@]}"; do
+      git -C "${repo}" pull
+      git -C "${repo}" submodule update --init --recursive
+    done
   fi
 fi

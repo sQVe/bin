@@ -5,4 +5,7 @@
 # ┗━┛╹  ┗━╸╹ ╹
 # Open a file quietly in the background.
 
+set -euo pipefail
+
 mimeo --quiet "$@" &
+disown

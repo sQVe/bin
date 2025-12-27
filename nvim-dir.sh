@@ -4,7 +4,9 @@
 #  ┃┗┫┃┏┛┃┃┃┃    ┃┃┃┣┳┛
 #  ╹ ╹┗┛ ╹╹ ╹   ╺┻┛╹╹┗╸
 
-if [[ -d "$1" ]]; then
+set -euo pipefail
+
+if [[ -d "${1:-}" ]]; then
   (builtin cd "$1" && nvim)
 else
   nvim "$@"

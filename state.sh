@@ -4,23 +4,33 @@
 #  ┗━┓ ┃ ┣━┫ ┃ ┣╸
 #  ┗━┛ ╹ ╹ ╹ ╹ ┗━╸
 
-case "$1" in
+set -euo pipefail
+
+backup_history() {
+  "${SCRIPTS}/zsh/backup-history.sh"
+}
+
+case "${1:-}" in
   exit)
-    "${SCRIPTS}/backup-shell-history.sh"
-    i3-msg exit
+    backup_history
+    niri msg action quit
     ;;
   lock)
-    lock
+    qs msg -c noctalia-shell lockScreen lock
     ;;
-  shutdown | poweroff)
-    "${SCRIPTS}/backup-shell-history.sh"
+  shutdown|poweroff)
+    backup_history
     systemctl poweroff
     ;;
   suspend)
     systemctl suspend
     ;;
   reboot)
-    "${SCRIPTS}/backup-shell-history.sh"
+    backup_history
     systemctl reboot
+    ;;
+  *)
+    echo "Usage: $(basename "$0") {exit|lock|shutdown|poweroff|suspend|reboot}" >&2
+    exit 1
     ;;
 esac

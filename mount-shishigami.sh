@@ -4,25 +4,24 @@
 #  ┃┃┃┃ ┃┃ ┃┃┗┫ ┃    ┗━┓┣━┫┃┗━┓┣━┫┃┃╺┓┣━┫┃┃┃┃
 #  ╹ ╹┗━┛┗━┛╹ ╹ ╹    ┗━┛╹ ╹╹┗━┛╹ ╹╹┗━┛╹ ╹╹ ╹╹
 
-green='\033[0;32m'
-cyan='\033[0;36m'
-nc='\033[0m'
+set -euo pipefail
 
-sudo mkdir -p /mnt/shishigami
-sudo mkdir -p /mnt/shishigami/media
-sudo mkdir -p /mnt/shishigami/misc
-sudo mkdir -p /mnt/shishigami/backup
+readonly green='\033[0;32m'
+readonly red='\033[0;31m'
+readonly cyan='\033[0;36m'
+readonly nc='\033[0m'
+readonly shares=(media misc backup)
+
+sudo mkdir -p /mnt/shishigami/{media,misc,backup}
 
 echo -e "${cyan}Mounting shishigami...${nc}"
 
-echo -n 'media: '
-sudo mount -t nfs -o vers=4 shishigami:/volume1/media /mnt/shishigami/media
-echo -e "${green}OK${nc}"
-
-echo -n 'misc: '
-sudo mount -t nfs -o vers=4 shishigami:/volume1/misc /mnt/shishigami/misc
-echo -e "${green}OK${nc}"
-
-echo -n 'backup: '
-sudo mount -t nfs -o vers=4 shishigami:/volume1/backup /mnt/shishigami/backup
-echo -e "${green}OK${nc}"
+for share in "${shares[@]}"; do
+  echo -n "${share}: "
+  if sudo mount -t nfs -o vers=4 "shishigami:/volume1/${share}" "/mnt/shishigami/${share}"; then
+    echo -e "${green}OK${nc}"
+  else
+    echo -e "${red}FAILED${nc}"
+    exit 1
+  fi
+done
