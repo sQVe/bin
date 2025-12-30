@@ -18,5 +18,6 @@ fi
 for src in "${bin_dir}"/*.sh; do
   [[ -f "${src}" ]] || continue
   cmd="$(basename "${src%.sh}")"
+  [[ "${cmd}" == "install" ]] && continue
   ln -sf "${src}" "${local_bin}/${cmd}"
 done
