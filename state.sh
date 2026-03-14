@@ -16,7 +16,7 @@ case "${1:-}" in
     niri msg action quit
     ;;
   lock)
-    qs msg -c noctalia-shell lockScreen lock
+    qs ipc --any-display -c noctalia-shell call lockScreen lock
     ;;
   shutdown | poweroff)
     backup_history
